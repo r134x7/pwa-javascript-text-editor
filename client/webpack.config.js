@@ -18,12 +18,54 @@ module.exports = () => {
       path: path.resolve(__dirname, 'dist'),
     },
     plugins: [
-      
+      new HtmlWebpackPlugin({ // to generate the HTML file and inject the bundles
+        template: "./index.html",
+        title: "J.A.T.E."
+      }),
+
+      new InjectManifest({ // injects the service worker
+        swSrc: "./src-sw.js",
+        swDest: "src-sw.js",
+      }),
+
+      new WebpackPwaManifest({ // creates the manifest.json file
+        fingerprints: false,
+        inject: true,
+        name: "Just Another Text Editor",
+        short_name: "J.A.T.E.",
+        description: "Takes notes with JavaScript syntax highlighting.",
+        background_color: '#225ca3',
+        theme_color: '#225ca3',
+        start_url: '/',
+        publicPath: '/',
+        icons: [
+          {
+            src: path.resolve('src/images/logo.png'),
+            sizes: [96, 128, 192, 256, 384, 512],
+            destination: path.join('assets', 'icons'),
+          },
+        ],
+
+      })
     ],
 
     module: {
       rules: [
-        
+        {
+          test: /\.css$/i,
+          use: ["style-loader", "css-loader"],
+        },
+        {
+          test: /\.m?js$/,
+          exclude: /node_modules/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-env'],
+              plugins: ['@babel/transform-runtime'],
+            },
+          },
+        }
       ],
     },
   };
