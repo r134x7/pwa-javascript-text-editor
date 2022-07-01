@@ -27,4 +27,18 @@ warmStrategyCache({
 registerRoute(({ request }) => request.mode === 'navigate', pageCache);
 
 // TODO: Implement asset caching
-registerRoute();
+registerRoute(
+  ({ request }) => ['style', 'script', 'worker'].includes(request.destination), // to cache the CSS and JS files
+  
+  new CacheFirst({
+    cacheName: "asset-cache",
+    plugins: [
+      new CacheableResponsePlugin({ // will cache responses of these statuses to a max of 30 days
+        statuses: [0, 200],
+      }),
+    ]
+  })
+
+);
+
+// offlineFallback hasn't been used......... is it supposed to be used somewhere....
