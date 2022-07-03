@@ -30,7 +30,7 @@ registerRoute(({ request }) => request.mode === 'navigate', pageCache);
 
 // TODO: Implement asset caching
 registerRoute(
-  ({ request }) => ['style', 'script', 'worker'].includes(request.destination), // to cache the CSS and JS files
+  ({ request }) => ['image','manifest','style', 'script', 'worker'].includes(request.destination), // source: https://developer.mozilla.org/en-US/docs/Web/API/Request/destination
   
   new CacheFirst({
     cacheName: "asset-cache",
@@ -46,6 +46,8 @@ registerRoute(
   })
   
   );
+
+  // offlineFallback()
 
   // offlineFallback({
   //   urls: ['/'],
