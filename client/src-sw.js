@@ -5,6 +5,7 @@ const { CacheableResponsePlugin } = require('workbox-cacheable-response');
 const { ExpirationPlugin } = require('workbox-expiration');
 const { precacheAndRoute } = require('workbox-precaching/precacheAndRoute');
 
+
 precacheAndRoute(self.__WB_MANIFEST);
 
 const pageCache = new CacheFirst({
@@ -24,6 +25,7 @@ warmStrategyCache({
   strategy: pageCache,
 });
 
+
 registerRoute(({ request }) => request.mode === 'navigate', pageCache);
 
 // TODO: Implement asset caching
@@ -36,9 +38,23 @@ registerRoute(
       new CacheableResponsePlugin({ // will cache responses of these statuses to a max of 30 days
         statuses: [0, 200],
       }),
+      new ExpirationPlugin({
+        maxEntries: 60,
+        maxAgeSeconds: 30 * 24 * 60 * 60, // 30 Days
+      }),
     ]
   })
+  
+  );
 
-);
+  // offlineFallback({
+  //   urls: ['/'],
+  // })
 
-// offlineFallback hasn't been used......... is it supposed to be used somewhere....
+  // offlineFallback();
+  
+  // offlineFallback({
+  //   urls: ['/index.html', '/'],
+  //   strategy: pageCache,
+  // })
+  // offlineFallback hasn't been used......... is it supposed to be used somewhere....
