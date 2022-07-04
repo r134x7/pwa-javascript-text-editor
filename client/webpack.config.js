@@ -21,7 +21,7 @@ module.exports = () => {
       new HtmlWebpackPlugin({ // to generate the HTML file and inject the bundles
         template: "./index.html",
         title: "J.A.T.E.",
-        favicon: "./favicon.ico"
+        favicon: "./favicon.ico" // method to add the favicon to the html
       }),
 
       new InjectManifest({ // injects the service worker
@@ -42,7 +42,7 @@ module.exports = () => {
         icons: [
           {
             src: path.resolve('src/images/logo.png'),
-            sizes: [96, 512],
+            sizes: [96, 512], // only using 96x96 and 512x512 sizes
             destination: path.join('assets', 'icons'),
           },
         ],
@@ -53,14 +53,14 @@ module.exports = () => {
     module: {
       rules: [
         {
-          test: /\.css$/i,
-          use: ["style-loader", "css-loader"],
+          test: /\.css$/i, // searches every CSS file
+          use: ["style-loader", "css-loader"], // uses these loaders which will have the CSS in the JavaScript bundle
         },
         {
-          test: /\.m?js$/,
+          test: /\.m?js$/, // searches for every JS or MJS file
           exclude: /node_modules/,
           use: {
-            loader: 'babel-loader',
+            loader: 'babel-loader', // using babel-loader to transpile code into ES5
             options: {
               presets: ['@babel/preset-env'],
               plugins: ['@babel/transform-runtime'],

@@ -32,7 +32,7 @@ registerRoute(({ request }) => request.mode === 'navigate', pageCache);
 registerRoute(
   ({ request }) => ['image','manifest','style', 'script', 'worker'].includes(request.destination), // source: https://developer.mozilla.org/en-US/docs/Web/API/Request/destination
   
-  new CacheFirst({
+  new CacheFirst({ // make new workbox strategy: CacheFirst
     cacheName: "asset-cache",
     plugins: [
       new CacheableResponsePlugin({ // will cache responses of these statuses to a max of 30 days

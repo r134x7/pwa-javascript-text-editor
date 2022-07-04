@@ -17,11 +17,11 @@ const initdb = async () =>
 export const putDb = async (content) => {
   console.log("PUT to database");
   const jateDb = await openDB("jate", 1);
-  const tx = jateDb.transaction("jate", 'readwrite');
+  const tx = jateDb.transaction("jate", 'readwrite'); // need readwrite authorisation
   const store = tx.objectStore("jate");// will cache responses of these statuses to a max of 30 days
-  const request = store.put({ id: 1, value: content })
+  const request = store.put({ id: 1, value: content }) // will PUT to id: 1 only.
   const result = await request;
-  console.log("data saved to the database", result);
+  console.log("Data saved to the database", result);
 };
 
 
@@ -30,12 +30,13 @@ export const putDb = async (content) => {
 export const getDb = async () => {
   console.log("GET all from database");
   const jateDb = await openDB("jate", 1);
-  const tx = jateDb.transaction("jate", 'readonly');
+  const tx = jateDb.transaction("jate", 'readonly'); // need readonly authorisation
   const store = tx.objectStore("jate");
-  const request = store.getAll();
+  const request = store.getAll(); // I used get all because the TODO above made it sound like I needed .getAll() so I used that instead of get()
   const result = await request;
-  console.log("result.value", result);
-  return (result.length === 0) ? null : result["0"]["value"];
+  console.log("result.value", result); // getAll() puts all the objects into an array
+  return (result.length === 0) ? null : result["0"]["value"]; // if the array is empty return null, otherwise result 0 index of array, return value from the object.
+  // because of using .getAll I used this to retrieve the string from the object. I assume if I used get() I wouldn't be having to do that but I already got this to work regardless
 };
 
 
