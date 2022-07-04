@@ -20,7 +20,8 @@ module.exports = () => {
     plugins: [
       new HtmlWebpackPlugin({ // to generate the HTML file and inject the bundles
         template: "./index.html",
-        title: "J.A.T.E."
+        title: "J.A.T.E.",
+        favicon: "./favicon.ico"
       }),
 
       new InjectManifest({ // injects the service worker
@@ -42,11 +43,6 @@ module.exports = () => {
           {
             src: path.resolve('src/images/logo.png'),
             sizes: [96, 512],
-            destination: path.join('assets', 'icons'),
-          },
-          {
-            src: path.resolve('favicon.ico'),
-            sizes: [48],
             destination: path.join('assets', 'icons'),
           },
         ],

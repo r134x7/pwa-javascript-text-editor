@@ -46,17 +46,3 @@ registerRoute(
   })
   
   );
-
-  // offlineFallback()
-
-  // offlineFallback({
-  //   urls: ['/'],
-  // })
-
-  // offlineFallback();
-  
-  // offlineFallback({
-  //   urls: ['/index.html', '/'],
-  //   strategy: pageCache,
-  // })
-  // offlineFallback hasn't been used......... is it supposed to be used somewhere....
